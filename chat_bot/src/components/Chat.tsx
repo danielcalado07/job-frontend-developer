@@ -4,6 +4,7 @@ import avatarBot from "@/assets/avatarBot.png";
 import avatarUser from "@/assets/avatarUser.png";
 import { useState } from "react";
 import ChatHistory from "./ChatHistory";
+import send from "@/assets/send.svg";
 
 export default function Chat() {
   const [menssages] = useState(
@@ -67,7 +68,7 @@ export default function Chat() {
               className="w-full p-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button className=" bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
-              ddd
+              <img src={send.src} alt="Send" className="w-6 h-6" />
             </button>
           </div>
         </div>
