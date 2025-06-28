@@ -66,8 +66,8 @@ export default function Chat() {
               placeholder="Type your message..."
               className="w-full p-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button className=" bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Send
+            <button className=" bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
+              ddd
             </button>
           </div>
         </div>
