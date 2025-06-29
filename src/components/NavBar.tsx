@@ -1,5 +1,6 @@
 "use client";
 import { useDrawer } from "@/context/DrawerContext";
+import Link from "next/link";
 
 export default function NavBar() {
   const { toggleDrawer } = useDrawer();
@@ -7,12 +8,12 @@ export default function NavBar() {
   return (
     <nav className="bg-gray-800 p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
-        <a
+        <Link
           href="/"
           className="text-white text-lg font-semibold hidden md:block"
         >
           Chat Bot
-        </a>
+        </Link>
         <button className="md:hidden" onClick={toggleDrawer}>
           <svg
             className="w-6 h-6 text-white"

@@ -21,9 +21,9 @@ Lembre-se que este é um teste técnico e não um concurso público, portanto, n
 
 ## O Desafio
 
-Você acabou de ser contratado como desenvolvedor frontend na Dolado e seu primeiro projeto é crucial: nossa equipe de produto identificou que muitos empresários abandonam o processo de onboarding porque acham as etapas confusas e impessoais. 
+Você acabou de ser contratado como desenvolvedor frontend na Dolado e seu primeiro projeto é crucial: nossa equipe de produto identificou que muitos empresários abandonam o processo de onboarding porque acham as etapas confusas e impessoais.
 
-O CEO te chamou e disse: *"Precisamos transformar essa experiência em algo que pareça uma conversa natural com um consultor especialista. Imagine que o empresário está conversando com alguém que realmente entende do negócio dele."*
+O CEO te chamou e disse: _"Precisamos transformar essa experiência em algo que pareça uma conversa natural com um consultor especialista. Imagine que o empresário está conversando com alguém que realmente entende do negócio dele."_
 
 Sua missão é criar uma interface de chatbot inteligente que faça o empresário se sentir compreendido e confiante de que a Dolado é a solução certa para transformar sua empresa em uma potência digital.
 
@@ -33,41 +33,44 @@ O chatbot deve conduzir uma conversa natural, coletando informações estratégi
 
 ### O contexto da conversa:
 
-Imagine que você está criando a experiência para Roberto, diretor comercial de uma indústria consolidada que fatura R$ 50 milhões por ano vendendo exclusivamente para distribuidores e grandes redes. A empresa tem 30 anos de mercado, produtos de qualidade reconhecida, mas zero presença digital. 
+Imagine que você está criando a experiência para Roberto, diretor comercial de uma indústria consolidada que fatura R$ 50 milhões por ano vendendo exclusivamente para distribuidores e grandes redes. A empresa tem 30 anos de mercado, produtos de qualidade reconhecida, mas zero presença digital.
 
 Roberto sabe que precisa "entrar no digital" porque vê concorrentes menores crescendo online, mas não sabe como uma empresa do porte dele pode competir nesses canais sem canibalizarizar os parceiros tradicionais.
 
 Seu chatbot precisa:
+
 - Demonstrar que entende a complexidade de grandes operações
-- Mostrar como marketplaces podem ser um canal adicional, não concorrente  
+- Mostrar como marketplaces podem ser um canal adicional, não concorrente
 - Abordar receios específicos de indústrias (pricing, distribuição, marca)
 - Convencer que a Dolado tem experiência com empresas do porte dele
 
 ### Jornada conversacional sugerida:
 
 1. **Boas-vindas** - Quebrar o gelo e explicar o valor da conversa
-2. **Qualificação inicial** - Entender o negócio de forma natural  
+2. **Qualificação inicial** - Entender o negócio de forma natural
 3. **Análise de marketplace** - Descobrir ambições e receios sobre venda online
 4. **Produtos** - Compreender o catálogo e potencial digital
 5. **Diagnóstico** - Avaliar maturidade atual sem julgamentos
 6. **Resultado** - Apresentar um plano específico e inspirador
 
-*Nota: Você pode implementar todas essas etapas ou focar nas que considerar mais importantes para demonstrar suas habilidades.*
+_Nota: Você pode implementar todas essas etapas ou focar nas que considerar mais importantes para demonstrar suas habilidades._
 
 ### Estrutura dos mocks fornecidos
 
 Para facilitar o desenvolvimento, fornecemos abaixo exemplos de respostas que o chatbot pode usar em cada etapa. **Você pode usar exatamente esses dados ou criar os seus próprios seguindo a estrutura.**
 
 #### Campos dos mocks:
+
 - **message**: Texto principal que o bot fala
 - **type**: Identificador da etapa (para controle de fluxo)
-- **options**: Array de opções de resposta para o usuário  
+- **options**: Array de opções de resposta para o usuário
 - **followUp**: Próxima pergunta na mesma etapa (opcional)
 - **tone/personality/insight**: Comentários para guiar o tom da conversa (podem ser ignorados no código)
 
-*Sinta-se livre para simplificar esses mocks ou criar sua própria estrutura de dados.*
+_Sinta-se livre para simplificar esses mocks ou criar sua própria estrutura de dados._
 
 #### 1. Boas-vindas
+
 ```json
 {
   "message": "Oi! Eu sou Sofia, consultora digital da Dolado. 😊 Sei que falar sobre vendas online pode parecer complicado, mas prometo que vamos tornar isso bem simples. Em 5 minutos, vou te mostrar exatamente como sua empresa pode crescer nos marketplaces. Pode ser?",
@@ -78,62 +81,110 @@ Para facilitar o desenvolvimento, fornecemos abaixo exemplos de respostas que o 
 ```
 
 #### 2. Qualificação inicial
+
 ```json
 {
   "message": "Perfeito! Deixa eu te conhecer melhor. Conta aí, que tipo de operação vocês têm? Quero entender a complexidade do negócio para dar as orientações mais assertivas.",
-  "type": "qualification", 
-  "options": ["Somos indústria/fabricantes", "Distribuidores atacadistas", "Operação mista (fabricamos e distribuímos)", "Grupo empresarial"],
+  "type": "qualification",
+  "options": [
+    "Somos indústria/fabricantes",
+    "Distribuidores atacadistas",
+    "Operação mista (fabricamos e distribuímos)",
+    "Grupo empresarial"
+  ],
   "followUp": {
     "message": "Que legal! E em termos de estrutura, vocês são uma operação de que porte?",
-    "options": ["Média empresa (R$ 10-50mi/ano)", "Grande empresa (R$ 50-200mi/ano)", "Corporação (R$ 200mi+/ano)", "Grupo/Holding"],
+    "options": [
+      "Média empresa (R$ 10-50mi/ano)",
+      "Grande empresa (R$ 50-200mi/ano)",
+      "Corporação (R$ 200mi+/ano)",
+      "Grupo/Holding"
+    ],
     "tone": "Entende que está falando com tomadores de decisão sérios, com operações complexas"
   }
 }
 ```
 
-#### 3. Análise de marketplace  
+#### 3. Análise de marketplace
+
 ```json
 {
   "message": "Entendi perfeitamente o perfil! Agora, uma pergunta estratégica: como vocês enxergam os marketplaces? Sei que muitas indústrias têm receios sobre canibalizarização dos canais tradicionais.",
   "type": "marketplace",
-  "options": ["Vemos como oportunidade adicional", "Temos receio de conflito com distribuidores", "Ainda estamos avaliando", "Concorrentes já estão lá, precisamos reagir"],
+  "options": [
+    "Vemos como oportunidade adicional",
+    "Temos receio de conflito com distribuidores",
+    "Ainda estamos avaliando",
+    "Concorrentes já estão lá, precisamos reagir"
+  ],
   "followUp": {
     "message": "Faz sentido! E se fossem testar, qual canal seria mais estratégico para o porte de vocês?",
-    "options": ["Mercado Livre (maior alcance)", "Amazon (perfil mais premium)", "Shopee (crescimento rápido)", "B2B marketplaces", "Marketplace próprio"],
+    "options": [
+      "Mercado Livre (maior alcance)",
+      "Amazon (perfil mais premium)",
+      "Shopee (crescimento rápido)",
+      "B2B marketplaces",
+      "Marketplace próprio"
+    ],
     "insight": "Mostra que entende estratégias de canal para grandes empresas"
   }
 }
 ```
 
 #### 4. Produtos
+
 ```json
 {
   "message": "Perfeito! Agora vamos falar do portfólio. Com o volume que vocês devem ter, imagino que seja um catálogo robusto. Quantas SKUs vocês gerenciam?",
   "type": "products",
-  "options": ["Catálogo focado (até 500 SKUs)", "Portfólio amplo (500-2000 SKUs)", "Mega catálogo (2000+ SKUs)", "Multiple categorias/divisões"],
+  "options": [
+    "Catálogo focado (até 500 SKUs)",
+    "Portfólio amplo (500-2000 SKUs)",
+    "Mega catálogo (2000+ SKUs)",
+    "Multiple categorias/divisões"
+  ],
   "followUp": {
     "message": "E me conta, qual segmento representa o core do negócio de vocês?",
-    "options": ["Bens de consumo duráveis", "Componentes/Insumos industriais", "Produtos de marca própria", "Linha completa multi-categoria", "B2B especializado"],
+    "options": [
+      "Bens de consumo duráveis",
+      "Componentes/Insumos industriais",
+      "Produtos de marca própria",
+      "Linha completa multi-categoria",
+      "B2B especializado"
+    ],
     "tone": "Reconhece a complexidade de grandes operações e múltiplas linhas"
   }
 }
 ```
 
 #### 5. Diagnóstico
+
 ```json
 {
   "message": "Seus produtos têm potencial gigantesco online! Agora, para entender melhor a maturidade operacional: como vocês gerenciam a operação hoje? ERP, WMS, integração?",
   "type": "diagnosis",
-  "options": ["ERP robusto (SAP, Oracle, etc)", "Sistema próprio bem estruturado", "Mix de sistemas integrados", "Operação ainda manual em partes"],
+  "options": [
+    "ERP robusto (SAP, Oracle, etc)",
+    "Sistema próprio bem estruturado",
+    "Mix de sistemas integrados",
+    "Operação ainda manual em partes"
+  ],
   "followUp": {
     "message": "E em termos de marketing/branding digital, como vocês se posicionam no mercado?",
-    "options": ["Marca consolidada offline, zero digital", "Presença básica (site institucional)", "Marketing B2B estruturado", "Estratégia digital em desenvolvimento", "Focamos só no relacionamento direto"],
+    "options": [
+      "Marca consolidada offline, zero digital",
+      "Presença básica (site institucional)",
+      "Marketing B2B estruturado",
+      "Estratégia digital em desenvolvimento",
+      "Focamos só no relacionamento direto"
+    ],
     "tone": "Entende que grandes empresas têm operações complexas e decisões estruturadas"
   }
 }
 ```
 
 #### 6. Resultado
+
 ```json
 {
   "message": "Roberto, conversando com você fica claro uma coisa: vocês estão numa posição PRIVILEGIADA. Têm produto consolidado, operação estruturada, marca respeitada - só falta usar isso no digital. Empresas do porte de vocês que entraram nos marketplaces cresceram 40-60% sem canibalizarizar os canais tradicionais.",
@@ -144,14 +195,17 @@ Para facilitar o desenvolvimento, fornecemos abaixo exemplos de respostas que o 
     "specificInsights": "Indústrias com faturamento similar à de vocês criaram novos canais de receita representando 15-25% do faturamento total",
     "recommendations": [
       "Estratégia de canal complementar (não concorrente)",
-      "Pricing diferenciado para não conflitar com distribuidores", 
+      "Pricing diferenciado para não conflitar com distribuidores",
       "Teste controlado em marketplace premium primeiro",
       "Estrutura dedicada para e-commerce (não impacta operação atual)"
     ]
   },
   "nextSteps": {
     "message": "Que tal uma conversa estratégica com nosso especialista em grandes contas? Ele já ajudou indústrias similares a criar canais digitais de R$ 20-50mi sem nenhum conflito. Posso agendar?",
-    "options": ["Sim, quero conversa estratégica", "Manda um case similar primeiro"],
+    "options": [
+      "Sim, quero conversa estratégica",
+      "Manda um case similar primeiro"
+    ],
     "urgency": "Seus concorrentes já estão se movimentando - quem sair na frente vai dominar o digital no seu segmento"
   }
 }
@@ -165,7 +219,7 @@ Para facilitar o desenvolvimento, fornecemos abaixo exemplos de respostas que o 
 - **Layout responsivo** e mobile-first
 - Interface de chat funcional
 - Utilização dos mocks fornecidos (ou similares)
-- **Gerenciamento de estado** (Context API, Redux, Zustand, etc.) - *obrigatório para candidatos pleno/sênior*
+- **Gerenciamento de estado** (Context API, Redux, Zustand, etc.) - _obrigatório para candidatos pleno/sênior_
 
 ## O que nós ficaríamos felizes de ver em seu teste
 
@@ -192,22 +246,25 @@ Para facilitar o desenvolvimento, fornecemos abaixo exemplos de respostas que o 
 Para candidatos que queiram se destacar, especialmente em vagas de senioridade mais alta, oferecemos a possibilidade de integrar com modelos de IA reais usando APIs gratuitas.
 
 ### Opções recomendadas:
+
 - **Hugging Face** - Possui diversos modelos gratuitos para chat
   - Documentação: https://huggingface.co/docs/inference-providers/index
   - Modelos: https://huggingface.co/models
 - **Ollama** - Para rodar modelos localmente
 - **OpenAI API** - Tem tier gratuito limitado
 
-*Nota: Esta integração é totalmente opcional e não será critério de desqualificação se não implementada. Recomendamos focar primeiro na interface e experiência do usuário.*
+_Nota: Esta integração é totalmente opcional e não será critério de desqualificação se não implementada. Recomendamos focar primeiro na interface e experiência do usuário._
 
 ## Tipos de resposta sugeridos
 
 Para a interface do chat, recomendamos implementar pelo menos:
+
 - **Mensagens de texto** simples
 - **Botões de opção** para respostas rápidas
 - **Estados de digitação** ("Bot está digitando...")
 
 ### Extras que podem impressionar:
+
 - Cards com informações visuais
 - Formulários inline para coleta de dados
 - Gráficos simples de diagnóstico

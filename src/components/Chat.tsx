@@ -1,7 +1,6 @@
 "use client";
 import { messages_bot } from "@/data/messages";
 import avatarBot from "@/assets/avatarBot.png";
-import avatarUser from "@/assets/avatarUser.png";
 import { useEffect, useState } from "react";
 import ChatHistory from "./ChatHistory";
 import send from "@/assets/send.svg";
@@ -73,7 +72,7 @@ export default function Chat() {
                   <div className="bg-gray-700 text-white p-2 rounded-e-lg rounded-es-lg flex flex-col gap-2 text-sm w-[90%]">
                     <p className="mb-2">
                       {index === menssages.length - 1 &&
-                        message.sender === "bot"
+                      message.sender === "bot"
                         ? message2
                         : message.message}
                     </p>

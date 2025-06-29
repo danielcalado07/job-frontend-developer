@@ -1,4 +1,4 @@
-import { Message } from "@/types/message"
+import { Message } from "@/types/message";
 
 export const messages_bot: Message[] = [
   {
@@ -8,12 +8,12 @@ export const messages_bot: Message[] = [
     type: "welcome",
     options: [
       { text: "Claro, vamos lá!", idNextMessage: 2 },
-      { text: "Primeiro quero entender melhor", idNextMessage: 3 }
+      { text: "Primeiro quero entender melhor", idNextMessage: 3 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 2,
@@ -24,12 +24,12 @@ export const messages_bot: Message[] = [
       { text: "Indústria/Fabricante", idNextMessage: 4 },
       { text: "Distribuidor atacadista", idNextMessage: 5 },
       { text: "Operação mista (fabricamos e distribuímos)", idNextMessage: 5 },
-      { text: "Grupo empresarial", idNextMessage: 5 }
+      { text: "Grupo empresarial", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 3,
@@ -40,12 +40,12 @@ export const messages_bot: Message[] = [
       { text: "Média empresa (R$ 10-50mi)", idNextMessage: 6 },
       { text: "Grande empresa (R$ 50-200mi)", idNextMessage: 7 },
       { text: "Corporação (R$ 200mi+)", idNextMessage: 8 },
-      { text: "Grupo/Holding", idNextMessage: 5 }
+      { text: "Grupo/Holding", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 4,
@@ -56,12 +56,12 @@ export const messages_bot: Message[] = [
       { text: "Oportunidade adicional", idNextMessage: 9 },
       { text: "Ainda avaliando", idNextMessage: 5 },
       { text: "Concorrentes já estão lá", idNextMessage: 5 },
-      { text: "Precisamos reagir", idNextMessage: 5 }
+      { text: "Precisamos reagir", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 5,
@@ -73,12 +73,12 @@ export const messages_bot: Message[] = [
       { text: "Amazon (perfil premium)", idNextMessage: 12 },
       { text: "Shopee (crescimento rápido)", idNextMessage: 13 },
       { text: "Marketplaces B2B", idNextMessage: 4 },
-      { text: "Marketplace próprio", idNextMessage: 5 }
+      { text: "Marketplace próprio", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 6,
@@ -89,29 +89,28 @@ export const messages_bot: Message[] = [
       { text: "Até 500 SKUs", idNextMessage: 11 },
       { text: "500-2000 SKUs", idNextMessage: 14 },
       { text: "Mais de 2000 SKUs", idNextMessage: 15 },
-      { text: "Múltiplas categorias/divisões", idNextMessage: 5 }
+      { text: "Múltiplas categorias/divisões", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 7,
-    message:
-      "Qual o segmento principal do seu negócio?",
+    message: "Qual o segmento principal do seu negócio?",
     type: "text",
     options: [
       { text: "Bens de consumo duráveis", idNextMessage: 11 },
       { text: "Componentes/Insumos industriais", idNextMessage: 12 },
       { text: "Produtos de marca própria", idNextMessage: 9 },
       { text: "Linha completa multi-categoria", idNextMessage: 5 },
-      { text: "B2B especializado", idNextMessage: 8 }
+      { text: "B2B especializado", idNextMessage: 8 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 8,
@@ -122,29 +121,28 @@ export const messages_bot: Message[] = [
       { text: "ERP robusto (SAP, Oracle, etc)", idNextMessage: 16 },
       { text: "Sistema próprio estruturado", idNextMessage: 11 },
       { text: "Mix de sistemas integrados", idNextMessage: 9 },
-      { text: "Operação ainda manual em partes", idNextMessage: 5 }
+      { text: "Operação ainda manual em partes", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 9,
-    message:
-      "E em marketing/branding digital, como vocês se posicionam?",
+    message: "E em marketing/branding digital, como vocês se posicionam?",
     type: "text",
     options: [
       { text: "Marca consolidada offline, zero digital", idNextMessage: 17 },
       { text: "Presença básica (site institucional)", idNextMessage: 18 },
       { text: "Marketing B2B estruturado", idNextMessage: 10 },
       { text: "Estratégia digital em desenvolvimento", idNextMessage: 4 },
-      { text: "Focamos no relacionamento direto", idNextMessage: 5 }
+      { text: "Focamos no relacionamento direto", idNextMessage: 5 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 11,
@@ -155,12 +153,12 @@ export const messages_bot: Message[] = [
       { text: "Buscar X de faturamento", idNextMessage: 19 },
       { text: "Testar o canal primeiro", idNextMessage: 20 },
       { text: "Ainda não definimos metas", idNextMessage: 20 },
-      { text: "Crescer nossa marca online", idNextMessage: 20 }
+      { text: "Crescer nossa marca online", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 12,
@@ -170,12 +168,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, temos diferenciais claros", idNextMessage: 19 },
       { text: "Ainda estamos explorando", idNextMessage: 20 },
-      { text: "Precisamos de ajuda nessa definição", idNextMessage: 20 }
+      { text: "Precisamos de ajuda nessa definição", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 13,
@@ -185,12 +183,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, estamos preparados", idNextMessage: 19 },
       { text: "Temos capacidade, mas precisamos otimizar", idNextMessage: 20 },
-      { text: "Ainda avaliando a logística", idNextMessage: 20 }
+      { text: "Ainda avaliando a logística", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 14,
@@ -200,12 +198,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, já usamos", idNextMessage: 16 },
       { text: "Ainda não, mas estamos buscando", idNextMessage: 19 },
-      { text: "Fazemos manualmente", idNextMessage: 20 }
+      { text: "Fazemos manualmente", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 15,
@@ -215,12 +213,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, nosso sistema é integrado", idNextMessage: 16 },
       { text: "Estamos buscando uma solução", idNextMessage: 19 },
-      { text: "Ainda é um desafio", idNextMessage: 20 }
+      { text: "Ainda é um desafio", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 16,
@@ -230,12 +228,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Temos equipe dedicada", idNextMessage: 19 },
       { text: "Gerenciado por outras áreas", idNextMessage: 20 },
-      { text: "Montando a equipe agora", idNextMessage: 20 }
+      { text: "Montando a equipe agora", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 17,
@@ -245,12 +243,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, temos algumas ideias", idNextMessage: 19 },
       { text: "Ainda não, precisamos de direcionamento", idNextMessage: 20 },
-      { text: "Focamos mais em vendas diretas", idNextMessage: 20 }
+      { text: "Focamos mais em vendas diretas", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 18,
@@ -260,12 +258,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, temos budget", idNextMessage: 19 },
       { text: "Ainda não, mas consideramos", idNextMessage: 20 },
-      { text: "Nosso foco é orgânico", idNextMessage: 20 }
+      { text: "Nosso foco é orgânico", idNextMessage: 20 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 19,
@@ -275,12 +273,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, quero agendar!", idNextMessage: 21 },
       { text: "Preciso de mais infos", idNextMessage: 22 },
-      { text: "Vou pensar e retorno", idNextMessage: 23 }
+      { text: "Vou pensar e retorno", idNextMessage: 23 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 20,
@@ -290,12 +288,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Sim, vamos agendar!", idNextMessage: 21 },
       { text: "Saber mais sobre a Dolado", idNextMessage: 22 },
-      { text: "Vou pensar e retorno", idNextMessage: 23 }
+      { text: "Vou pensar e retorno", idNextMessage: 23 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 21,
@@ -306,7 +304,7 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 22,
@@ -316,12 +314,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Estratégia", idNextMessage: 24 },
       { text: "Gestão de anúncios", idNextMessage: 25 },
-      { text: "Agendar conversa!", idNextMessage: 21 }
+      { text: "Agendar conversa!", idNextMessage: 21 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 23,
@@ -332,7 +330,7 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 24,
@@ -342,12 +340,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "E gestão de anúncios?", idNextMessage: 25 },
       { text: "Como funciona a integração?", idNextMessage: 26 },
-      { text: "Agendar conversa!", idNextMessage: 21 }
+      { text: "Agendar conversa!", idNextMessage: 21 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 25,
@@ -357,12 +355,12 @@ export const messages_bot: Message[] = [
     options: [
       { text: "Como funciona a integração?", idNextMessage: 26 },
       { text: "E a análise de dados?", idNextMessage: 27 },
-      { text: "Agendar conversa!", idNextMessage: 21 }
+      { text: "Agendar conversa!", idNextMessage: 21 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 26,
@@ -371,12 +369,12 @@ export const messages_bot: Message[] = [
     type: "text",
     options: [
       { text: "E a análise de dados?", idNextMessage: 27 },
-      { text: "Agendar conversa!", idNextMessage: 21 }
+      { text: "Agendar conversa!", idNextMessage: 21 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   },
   {
     id: 27,
@@ -385,11 +383,11 @@ export const messages_bot: Message[] = [
     type: "text",
     options: [
       { text: "Agendar conversa!", idNextMessage: 21 },
-      { text: "Voltando aos pilares...", idNextMessage: 22 }
+      { text: "Voltando aos pilares...", idNextMessage: 22 },
     ],
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString()
-  }
-]
+    timestamp: new Date().toISOString(),
+  },
+];
