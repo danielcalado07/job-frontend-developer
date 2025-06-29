@@ -41,7 +41,7 @@ export default function Chat() {
 
   return (
     <main className="flex flex-col items-center justify-center p-4 gap-2">
-      <div className="bg-gray-900 shadow-md rounded-lg w-full max-w-4xl flex flex-row p-4 gap-4 h-[70vh] mt-10">
+      <div className="md:bg-gray-900 shadow-md rounded-lg w-full max-w-4xl flex flex-row md:p-4 gap-4 h-[80vh] md:mt-10">
         <ChatHistory />
         <div className="flex flex-col w-full h-full">
           <div className="flex items-center mb-4 bg-gray-800 p-2 rounded-lg">
@@ -63,22 +63,22 @@ export default function Chat() {
                   className="flex flex-row gap-2"
                   key={index}
                 >
-                  <div className="w-10 h-10 rounded-full mb-2 bg-gray-700">
+                  <div className="w-9 h-9 rounded-full mb-2 bg-gray-700">
                     <img
                       src={avatarBot.src}
                       alt="Bot Avatar"
-                      className="w-10 h-10 rounded-full mb-2"
+                      className="w-9 h-9 rounded-full"
                     />
                   </div>
                   <div className="bg-gray-700 text-white p-2 rounded-e-lg rounded-es-lg flex flex-col gap-2 text-sm w-[90%]">
                     <p className="mb-2">
                       {index === menssages.length - 1 &&
-                      message.sender === "bot"
+                        message.sender === "bot"
                         ? message2
                         : message.message}
                     </p>
                     {message.typingDone ? (
-                      <div className="flex sm:flex-row flex-col gap-2 justify-end">
+                      <div className="flex flex-col gap-2 justify-end">
                         {message.options?.map(
                           (option: Option, optionIndex: number) => (
                             <button
