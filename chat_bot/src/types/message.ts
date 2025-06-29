@@ -1,8 +1,16 @@
+export interface Option {
+  text: string;
+  idNextMessage?: number;
+}
+
 export interface Message {
-    message: string;
-    type: "text" | "image" | "video" | "audio" | "file" | "welcome";
-    options?: string[];
-    personality?: string;
-    timestamp?: string; // ISO date string
-    sender?: "user" | "bot"; // Optional, to distinguish between user and bot messages
+  id?: number;
+  message: string;
+  type: string;
+  options?: Option[];
+  selectedOptions?: boolean;
+  personality?: string;
+  typingDone?: boolean;
+  timestamp?: string;
+  sender?: "user" | "bot";
 }
