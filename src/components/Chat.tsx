@@ -62,17 +62,18 @@ export default function Chat() {
                   className="flex flex-row gap-2"
                   key={index}
                 >
-                  <div className="w-9 h-9 rounded-full mb-2 bg-gray-700">
-                    <img
-                      src={avatarBot.src}
-                      alt="Bot Avatar"
-                      className="w-9 h-9 rounded-full"
-                    />
-                  </div>
-                  <div className="bg-gray-700 text-white p-2 rounded-e-lg rounded-es-lg flex flex-col gap-2 text-sm w-[90%]">
+                  <div className="bg-gray-700 text-white p-2 rounded-2xl flex flex-col gap-2 text-sm w-[95%]">
+                    <div className="rounded-full bg-gray-700 flex flex-row items-center gap-2">
+                      <img
+                        src={avatarBot.src}
+                        alt="Bot Avatar"
+                        className="w-9 h-9 rounded-full"
+                      />
+                      <p className="text-lg font-semibold text-white">Sofia Bot</p>
+                    </div>
                     <p className="mb-2">
                       {index === menssages.length - 1 &&
-                      message.sender === "bot"
+                        message.sender === "bot"
                         ? message2
                         : message.message}
                     </p>
@@ -112,7 +113,7 @@ export default function Chat() {
                   className="flex flex-row gap-2 justify-end text-sm w-[90%] ml-auto"
                   key={index}
                 >
-                  <p className="bg-blue-600 text-white p-2 rounded-s-lg rounded-se-lg">
+                  <p className="bg-blue-600 text-white p-1 px-3 rounded-2xl">
                     {message.message}
                   </p>
                 </div>
