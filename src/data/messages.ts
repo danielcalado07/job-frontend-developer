@@ -13,7 +13,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 2,
@@ -29,7 +28,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 3,
@@ -45,7 +43,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 4,
@@ -61,7 +58,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 5,
@@ -78,7 +74,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 6,
@@ -94,7 +89,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 7,
@@ -110,7 +104,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 8,
@@ -126,7 +119,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 9,
@@ -142,7 +134,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 11,
@@ -158,7 +149,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 12,
@@ -173,7 +163,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 13,
@@ -188,7 +177,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 14,
@@ -203,7 +191,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 15,
@@ -218,7 +205,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 16,
@@ -233,7 +219,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 17,
@@ -248,7 +233,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 18,
@@ -263,7 +247,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 19,
@@ -278,7 +261,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 20,
@@ -293,7 +275,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 21,
@@ -304,7 +285,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 22,
@@ -319,7 +299,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 23,
@@ -330,7 +309,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 24,
@@ -345,7 +323,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 25,
@@ -360,7 +337,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 26,
@@ -374,7 +350,6 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
   {
     id: 27,
@@ -388,6 +363,5 @@ export const messages_bot: Message[] = [
     selectedOptions: false,
     personality: "Consultiva, acolhedora, confiante mas não pressiona",
     sender: "bot",
-    timestamp: new Date().toISOString(),
   },
 ];
