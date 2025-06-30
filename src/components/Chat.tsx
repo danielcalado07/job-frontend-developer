@@ -1,42 +1,62 @@
 "use client";
 import { messages_bot } from "@/data/messages";
 import avatarBot from "@/assets/avatarBot.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChatHistory from "./ChatHistory";
 import send from "@/assets/send.svg";
-import { Message, Option } from "@/types/message";
-import typingMessage from "@/utils/typingMessage";
+import { Conversation, Message, Option } from "@/types/message";
+import { useConversationsChat } from "@/context/ConversationsChatContext";
 
 export default function Chat() {
   const [message2, setMessage2] = useState<string>("");
-  const [menssages, setMenssages] = useState<Message[]>(
-    messages_bot.filter((msg) => msg.type === "welcome"),
-  );
+  const [menssages, setMenssages] = useState<Message[]>([]);
+  const {
+    conversationsChats,
+    setConversationsChats,
+    selectedChat,
+    setSelectedChat,
+  } = useConversationsChat();
 
   const handleSendMessage = (message: string, idNextMessage: number) => {
     const newMessage: Message = {
       message,
       type: "text",
       sender: "user",
-      timestamp: new Date().toISOString(),
     };
     setMessage2("");
-    setMenssages((prevMessages) => {
-      const updatedMessages = [...prevMessages, newMessage];
-      const nextMessage = messages_bot.find((msg) => msg.id === idNextMessage);
-      if (nextMessage) {
-        return [...updatedMessages, nextMessage];
-      }
-      return updatedMessages;
-    });
+    const updatedMessages = [...(selectedChat ?? []), newMessage];
+    const nextMessage = messages_bot.find((msg) => msg.id === idNextMessage);
+    if (nextMessage) {
+      setSelectedChat([...updatedMessages, nextMessage]);
+      setConversationsChats(
+        conversationsChats.map((chat: Conversation) =>
+          chat.id === conversationsChats.length
+            ? { ...chat, messages: [...chat.messages, newMessage, nextMessage] }
+            : chat,
+        ),
+      );
+    } else {
+      setSelectedChat(updatedMessages);
+      setConversationsChats(
+        conversationsChats.map((chat: Conversation) =>
+          chat.id === conversationsChats.length
+            ? { ...chat, messages: [...chat.messages, newMessage] }
+            : chat,
+        ),
+      );
+    }
   };
 
-  useEffect(() => {
-    const lastMessage = menssages[menssages.length - 1];
-    if (lastMessage?.sender === "bot" && !lastMessage.typingDone) {
-      typingMessage(lastMessage.message, setMessage2, setMenssages);
-    }
-  }, [menssages]);
+  const newConversation = () => {
+    const newConversation: Conversation = {
+      id: conversationsChats.length + 1,
+      title: "New Conversation",
+      messages: messages_bot.filter((msg) => msg.type === "welcome"),
+    };
+
+    setConversationsChats([...conversationsChats, newConversation]);
+    setSelectedChat(messages_bot.filter((msg) => msg.type === "welcome"));
+  };
 
   return (
     <main className="flex flex-col items-center justify-center p-4 gap-2">
@@ -55,7 +75,20 @@ export default function Chat() {
             id="chat-box"
             className="bg-gray-800 p-4 rounded-lg overflow-y-auto flex flex-col gap-4 h-full screen min-w-72"
           >
-            {menssages.map((message, index) =>
+            {(!selectedChat || selectedChat.length === 0) && (
+              <div className="flex flex-col items-center justify-center h-full">
+                <p className="text-gray-400 text-lg">
+                  Start a conversation with Sofia Bot!
+                </p>
+                <button
+                  onClick={newConversation}
+                  className="mt-4 bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                >
+                  New Conversation
+                </button>
+              </div>
+            )}
+            {(selectedChat ?? []).map((message, index) =>
               message.sender === "bot" ? (
                 <div
                   id="messages_container-bot"
@@ -69,42 +102,42 @@ export default function Chat() {
                         alt="Bot Avatar"
                         className="w-9 h-9 rounded-full"
                       />
-                      <p className="text-lg font-semibold text-white">Sofia Bot</p>
+                      <p className="text-lg font-semibold text-white">
+                        Sofia Bot
+                      </p>
                     </div>
                     <p className="mb-2">
                       {index === menssages.length - 1 &&
-                        message.sender === "bot"
+                      message.sender === "bot"
                         ? message2
                         : message.message}
                     </p>
-                    {message.typingDone ? (
-                      <div className="flex flex-col gap-2 justify-end">
-                        {message.options?.map(
-                          (option: Option, optionIndex: number) => (
-                            <button
-                              key={optionIndex}
-                              onClick={() => {
-                                handleSendMessage(
-                                  option.text,
-                                  option.idNextMessage || 0,
-                                );
-                                setMenssages((prevMessages) =>
-                                  prevMessages.map((msg) =>
-                                    msg.id === message.id
-                                      ? { ...msg, selectedOptions: true }
-                                      : msg,
-                                  ),
-                                );
-                              }}
-                              className="text-white bg-blue-600 p-1 px-3 rounded-2xl transition-colors cursor-pointer hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
-                              disabled={message.selectedOptions}
-                            >
-                              {option.text}
-                            </button>
-                          ),
-                        )}
-                      </div>
-                    ) : null}
+                    <div className="flex flex-col gap-2 justify-end">
+                      {message.options?.map(
+                        (option: Option, optionIndex: number) => (
+                          <button
+                            key={optionIndex}
+                            onClick={() => {
+                              handleSendMessage(
+                                option.text,
+                                option.idNextMessage || 0,
+                              );
+                              setMenssages((prevMessages) =>
+                                prevMessages.map((msg) =>
+                                  msg.id === message.id
+                                    ? { ...msg, selectedOptions: true }
+                                    : msg,
+                                ),
+                              );
+                            }}
+                            className="text-white bg-blue-600 p-1 px-3 rounded-2xl transition-colors cursor-pointer hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                            disabled={message.selectedOptions}
+                          >
+                            {option.text}
+                          </button>
+                        ),
+                      )}
+                    </div>
                   </div>
                 </div>
               ) : (

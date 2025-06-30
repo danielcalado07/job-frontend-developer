@@ -14,3 +14,13 @@ export interface Message {
   timestamp?: string;
   sender?: "user" | "bot";
 }
+
+export interface Conversation {
+  id: number;
+  title: string;
+  messages: Message[];
+  createdAt?: string;
+  updatedAt?: string;
+  isArchived?: boolean;
+  isPinned?: boolean;
+}

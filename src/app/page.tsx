@@ -1,14 +1,17 @@
 import Chat from "@/components/Chat";
 import NavBar from "@/components/NavBar";
+import { ConversationsChatProvider } from "@/context/ConversationsChatContext";
 import { DrawerProvider } from "@/context/DrawerContext";
 
 export default function Home() {
   return (
     <>
-      <DrawerProvider>
-        <NavBar />
-        <Chat />
-      </DrawerProvider>
+      <ConversationsChatProvider>
+        <DrawerProvider>
+          <NavBar />
+          <Chat />
+        </DrawerProvider>
+      </ConversationsChatProvider>
     </>
   );
 }

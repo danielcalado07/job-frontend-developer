@@ -8,9 +8,15 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useDrawer } from "@/context/DrawerContext";
+import { useConversationsChat } from "@/context/ConversationsChatContext";
+import squarePen from "@/assets/square-pen.svg";
+import { messages_bot } from "@/data/messages";
 
 export default function ChatHistory() {
   const { open, toggleDrawer } = useDrawer();
+  const { conversationsChats, setConversationsChats, setSelectedChat } =
+    useConversationsChat();
+
   return (
     <>
       {/* Drawer for mobile view */}
@@ -42,21 +48,53 @@ export default function ChatHistory() {
                     </div>
                   </TransitionChild>
                   <div className="flex h-full flex-col overflow-y-auto bg-gray-800 py-6 shadow-xl">
-                    <div className="px-4 sm:px-6">
-                      <h2 className="text-white text-lg font-semibold p-4">
+                    <div className="bg-gray-800 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
+                      <button
+                        className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+                        onClick={() => {
+                          const newConversation = {
+                            id: conversationsChats.length + 1,
+                            title: "New Conversation",
+                            messages: [],
+                          };
+                          setConversationsChats([
+                            ...conversationsChats,
+                            newConversation,
+                          ]);
+                          setSelectedChat(
+                            messages_bot.filter(
+                              (msg) => msg.type === "welcome",
+                            ),
+                          );
+                          toggleDrawer();
+                        }}
+                      >
+                        <img
+                          src={squarePen.src}
+                          alt="SquarePen"
+                          className="w-6 h-6"
+                        />
+                        New Chat
+                      </button>
+                      <div className="border-t border-gray-700"></div>
+
+                      {/* List of conversations */}
+                      <h2 className="text-white text-lg font-semibold px-4 py-2">
                         Chats
                       </h2>
-                      <a className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer">
-                        <span className="text-white">Chat with Sofia</span>
-                      </a>
-                      <a className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer">
-                        <span className="text-white">Chat with Support</span>
-                      </a>
-                      <a className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer">
-                        <span className="text-white">Chat with Sales</span>
-                      </a>
+                      {conversationsChats.map((chat) => (
+                        <button
+                          key={chat.id}
+                          className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer"
+                          onClick={() => {
+                            setSelectedChat(chat.messages);
+                            toggleDrawer();
+                          }}
+                        >
+                          {chat.title}
+                        </button>
+                      ))}
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6"></div>
                   </div>
                 </DialogPanel>
               </div>
@@ -68,19 +106,38 @@ export default function ChatHistory() {
       {/* Sidebar for larger screens */}
       <div className="bg-gray-900 shadow-md rounded-lg w-full max-w-52 flex-col hidden md:block">
         <div className="bg-gray-800 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
-          <h2 className="text-white text-lg font-semibold p-4">Chats</h2>
-          <a className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer">
-            <span className="text-white">Chat with Sofia</span>
-          </a>
-          <a className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer">
-            <span className="text-white">Chat with Support</span>
-          </a>
-          <a
-            className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors
-                    cursor-pointer"
+          <button
+            className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+            onClick={() => {
+              const newConversation = {
+                id: conversationsChats.length + 1,
+                title: "New Conversation",
+                messages: [],
+              };
+              setConversationsChats([...conversationsChats, newConversation]);
+              setSelectedChat(
+                messages_bot.filter((msg) => msg.type === "welcome"),
+              );
+            }}
           >
-            <span className="text-white">Chat with Sales</span>
-          </a>
+            <img src={squarePen.src} alt="SquarePen" className="w-6 h-6" />
+            New Chat
+          </button>
+          <div className="border-t border-gray-700"></div>
+
+          {/* List of conversations */}
+          <h2 className="text-white text-lg font-semibold px-4 py-2">Chats</h2>
+          {conversationsChats.map((chat) => (
+            <button
+              key={chat.id}
+              className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer"
+              onClick={() => {
+                setSelectedChat(chat.messages);
+              }}
+            >
+              {chat.title}
+            </button>
+          ))}
         </div>
       </div>
     </>
