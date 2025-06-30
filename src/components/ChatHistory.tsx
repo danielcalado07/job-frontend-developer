@@ -50,21 +50,19 @@ export default function ChatHistory() {
                   <div className="flex h-full flex-col overflow-y-auto bg-gray-800 py-6 shadow-xl">
                     <div className="bg-gray-800 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
                       <button
-                        className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+                        className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors "
                         onClick={() => {
                           const newConversation = {
                             id: conversationsChats.length + 1,
                             title: "New Conversation",
-                            messages: [],
+                            messages: messages_bot.filter((msg) => msg.type === "welcome")
                           };
                           setConversationsChats([
                             ...conversationsChats,
                             newConversation,
                           ]);
                           setSelectedChat(
-                            messages_bot.filter(
-                              (msg) => msg.type === "welcome",
-                            ),
+                            newConversation.messages,
                           );
                           toggleDrawer();
                         }}
@@ -85,7 +83,7 @@ export default function ChatHistory() {
                       {conversationsChats.map((chat) => (
                         <button
                           key={chat.id}
-                          className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer"
+                          className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer text-white text-md font-semibold"
                           onClick={() => {
                             setSelectedChat(chat.messages);
                             toggleDrawer();
@@ -112,11 +110,11 @@ export default function ChatHistory() {
               const newConversation = {
                 id: conversationsChats.length + 1,
                 title: "New Conversation",
-                messages: [],
+                messages: messages_bot.filter((msg) => msg.type === "welcome")
               };
               setConversationsChats([...conversationsChats, newConversation]);
               setSelectedChat(
-                messages_bot.filter((msg) => msg.type === "welcome"),
+                newConversation.messages,
               );
             }}
           >
@@ -130,7 +128,7 @@ export default function ChatHistory() {
           {conversationsChats.map((chat) => (
             <button
               key={chat.id}
-              className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer"
+              className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer  text-white text-md font-semibold"
               onClick={() => {
                 setSelectedChat(chat.messages);
               }}
