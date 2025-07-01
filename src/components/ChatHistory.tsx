@@ -47,23 +47,23 @@ export default function ChatHistory() {
                       </button>
                     </div>
                   </TransitionChild>
-                  <div className="flex h-full flex-col overflow-y-auto bg-gray-800 py-6 shadow-xl">
-                    <div className="bg-gray-800 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
+                  <div className="flex h-full flex-col overflow-y-auto dark:bg-gray-800 bg-gray-200 shadow-xl">
+                    <div className="dark:bg-gray-800 bg-gray-200 overflow-y-auto flex flex-col gap-2 h-full screen">
                       <button
-                        className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors "
+                        className="bg-gray-700 dark:bg-gray-800 text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer dark:hover:bg-gray-700 transition-colors "
                         onClick={() => {
                           const newConversation = {
                             id: conversationsChats.length + 1,
                             title: "New Conversation",
-                            messages: messages_bot.filter((msg) => msg.type === "welcome")
+                            messages: messages_bot.filter(
+                              (msg) => msg.type === "welcome",
+                            ),
                           };
                           setConversationsChats([
                             ...conversationsChats,
                             newConversation,
                           ]);
-                          setSelectedChat(
-                            newConversation.messages,
-                          );
+                          setSelectedChat(newConversation.messages);
                           toggleDrawer();
                         }}
                       >
@@ -74,16 +74,15 @@ export default function ChatHistory() {
                         />
                         New Chat
                       </button>
-                      <div className="border-t border-gray-700"></div>
 
                       {/* List of conversations */}
-                      <h2 className="text-white text-lg font-semibold px-4 py-2">
+                      <h2 className="dark:text-white text-black text-lg font-semibold px-4 py-2">
                         Chats
                       </h2>
                       {conversationsChats.map((chat) => (
                         <button
                           key={chat.id}
-                          className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer text-white text-md font-semibold"
+                          className="menu-item px-4 py-2 dark:hover:bg-gray-700 hover:bg-gray-400 transition-colors cursor-pointer dark:text-white text-black text-md font-semibold"
                           onClick={() => {
                             setSelectedChat(chat.messages);
                             toggleDrawer();
@@ -103,32 +102,31 @@ export default function ChatHistory() {
 
       {/* Sidebar for larger screens */}
       <div className="bg-gray-900 shadow-md rounded-lg w-full max-w-52 flex-col hidden md:block">
-        <div className="bg-gray-800 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
+        <div className="dark:bg-gray-800 bg-gray-300 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
           <button
-            className="text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+            className="bg-gray-700 dark:bg-gray-800 text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
             onClick={() => {
               const newConversation = {
                 id: conversationsChats.length + 1,
                 title: "New Conversation",
-                messages: messages_bot.filter((msg) => msg.type === "welcome")
+                messages: messages_bot.filter((msg) => msg.type === "welcome"),
               };
               setConversationsChats([...conversationsChats, newConversation]);
-              setSelectedChat(
-                newConversation.messages,
-              );
+              setSelectedChat(newConversation.messages);
             }}
           >
             <img src={squarePen.src} alt="SquarePen" className="w-6 h-6" />
             New Chat
           </button>
-          <div className="border-t border-gray-700"></div>
 
           {/* List of conversations */}
-          <h2 className="text-white text-lg font-semibold px-4 py-2">Chats</h2>
+          <h2 className="dark:text-white text-black text-lg font-semibold px-4 py-2">
+            Chats
+          </h2>
           {conversationsChats.map((chat) => (
             <button
               key={chat.id}
-              className="menu-item px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer  text-white text-md font-semibold"
+              className="menu-item px-4 py-2 dark:hover:bg-gray-700 hover:bg-gray-400 transition-colors cursor-pointer  dark:text-white text-black text-md font-semibold"
               onClick={() => {
                 setSelectedChat(chat.messages);
               }}

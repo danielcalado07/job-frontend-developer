@@ -1,4 +1,3 @@
-
 export default function typingMessage(
   message: string,
   setMessage: (message: string) => void,

@@ -9,7 +9,7 @@ import { useConversationsChat } from "@/context/ConversationsChatContext";
 
 export default function Chat() {
   const [message2, setMessage2] = useState<string>("");
-  const [menssages, setMenssages] = useState<Message[]>([]);
+  const [menssages] = useState<Message[]>([]);
   const {
     conversationsChats,
     setConversationsChats,
@@ -23,15 +23,33 @@ export default function Chat() {
       type: "text",
       sender: "user",
     };
+
     setMessage2("");
-    const updatedMessages = [...(selectedChat ?? []), newMessage];
+
+    const updatedChat = (selectedChat ?? []).map((msg, index, arr) => {
+      if (
+        msg.sender === "bot" &&
+        msg.options &&
+        !msg.selectedOptions &&
+        index === arr.length - 1
+      ) {
+        return { ...msg, selectedOptions: true };
+      }
+      return msg;
+    });
+
+    const updatedMessages = [...updatedChat, newMessage];
     const nextMessage = messages_bot.find((msg) => msg.id === idNextMessage);
+
     if (nextMessage) {
       setSelectedChat([...updatedMessages, nextMessage]);
       setConversationsChats(
         conversationsChats.map((chat: Conversation) =>
           chat.id === conversationsChats.length
-            ? { ...chat, messages: [...chat.messages, newMessage, nextMessage] }
+            ? {
+                ...chat,
+                messages: [...chat.messages, newMessage, nextMessage],
+              }
             : chat,
         ),
       );
@@ -40,7 +58,10 @@ export default function Chat() {
       setConversationsChats(
         conversationsChats.map((chat: Conversation) =>
           chat.id === conversationsChats.length
-            ? { ...chat, messages: [...chat.messages, newMessage] }
+            ? {
+                ...chat,
+                messages: [...chat.messages, newMessage],
+              }
             : chat,
         ),
       );
@@ -60,24 +81,26 @@ export default function Chat() {
 
   return (
     <main className="flex flex-col items-center justify-center p-4 gap-2">
-      <div className="md:bg-gray-900 shadow-md rounded-lg w-full max-w-4xl flex flex-row md:p-4 gap-4 h-[80vh] md:mt-10">
+      <div className="dark:md:bg-gray-900 md:bg-gray-400 md:shadow-md rounded-lg w-full max-w-4xl flex flex-row md:p-4 gap-4 h-[80vh] md:mt-10">
         <ChatHistory />
         <div className="flex flex-col w-full h-full">
-          <div className="flex items-center mb-4 bg-gray-800 p-2 rounded-lg">
+          <div className="flex items-center mb-4 dark:bg-gray-800 bg-gray-300 p-2 rounded-lg">
             <img
               src={avatarBot.src}
               alt="Chat Bot Icon"
               className="w-12 h-12 mr-4 rounded-full"
             />
-            <p className="text-lg font-semibold text-white">Sofia Bot</p>
+            <p className="text-lg font-semibold dark:text-white text-black">
+              Sofia Bot
+            </p>
           </div>
           <div
             id="chat-box"
-            className="bg-gray-800 p-4 rounded-lg overflow-y-auto flex flex-col gap-4 h-full screen min-w-72"
+            className="dark:bg-gray-800 bg-gray-300 p-4 rounded-lg overflow-y-auto flex flex-col gap-4 h-full screen min-w-72"
           >
             {(!selectedChat || selectedChat.length === 0) && (
               <div className="flex flex-col items-center justify-center h-full">
-                <p className="text-gray-400 text-lg">
+                <p className="dark:text-gray-400 text-gray-950 text-lg">
                   Start a conversation with Sofia Bot!
                 </p>
                 <button
@@ -95,14 +118,14 @@ export default function Chat() {
                   className="flex flex-row gap-2"
                   key={index}
                 >
-                  <div className="bg-gray-700 text-white p-2 rounded-2xl flex flex-col gap-2 text-sm w-[95%]">
-                    <div className="rounded-full bg-gray-700 flex flex-row items-center gap-2">
+                  <div className="dark:bg-gray-700 bg-gray-50 dark:text-white text-black p-2 rounded-2xl flex flex-col gap-2 text-sm w-[95%]">
+                    <div className="rounded-full flex flex-row items-center gap-2">
                       <img
                         src={avatarBot.src}
                         alt="Bot Avatar"
                         className="w-9 h-9 rounded-full"
                       />
-                      <p className="text-lg font-semibold text-white">
+                      <p className="text-lg font-semibold dark:text-white text-black">
                         Sofia Bot
                       </p>
                     </div>
@@ -121,13 +144,6 @@ export default function Chat() {
                               handleSendMessage(
                                 option.text,
                                 option.idNextMessage || 0,
-                              );
-                              setMenssages((prevMessages) =>
-                                prevMessages.map((msg) =>
-                                  msg.id === message.id
-                                    ? { ...msg, selectedOptions: true }
-                                    : msg,
-                                ),
                               );
                             }}
                             className="text-white bg-blue-600 p-1 px-3 rounded-2xl transition-colors cursor-pointer hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
@@ -157,7 +173,7 @@ export default function Chat() {
             <input
               type="text"
               placeholder="Type your message..."
-              className="w-full p-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 rounded-lg dark:bg-gray-800 bg-gray-300 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button className=" bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
               <img src={send.src} alt="Send" className="w-6 h-6" />
