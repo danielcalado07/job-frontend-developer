@@ -13,7 +13,7 @@ export default function NavBar() {
 
   useEffect(() => {
     if (!storage.getItem("theme")) {
-      storage.setItem("theme", "light");
+      storage.setItem("theme", "dark");
     }
     const savedTheme = storage.getItem("theme");
     setChecked(savedTheme === "dark");

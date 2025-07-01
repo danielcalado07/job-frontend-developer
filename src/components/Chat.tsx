@@ -1,15 +1,15 @@
 "use client";
-import { messages_bot } from "@/data/messages";
+import { useEffect, useRef } from "react";
+import { marked } from "marked";
 import avatarBot from "@/assets/avatarBot.png";
-import { useState } from "react";
-import ChatHistory from "./ChatHistory";
 import send from "@/assets/send.svg";
-import { Conversation, Message, Option } from "@/types/message";
+import { messages_bot } from "@/data/messages";
 import { useConversationsChat } from "@/context/ConversationsChatContext";
+import ChatHistory from "./ChatHistory";
+import chatCompletion from "@/utils/chatCompletion";
+import { Conversation, Message } from "@/types/message";
 
 export default function Chat() {
-  const [message2, setMessage2] = useState<string>("");
-  const [menssages] = useState<Message[]>([]);
   const {
     conversationsChats,
     setConversationsChats,
@@ -17,66 +17,104 @@ export default function Chat() {
     setSelectedChat,
   } = useConversationsChat();
 
-  const handleSendMessage = (message: string, idNextMessage: number) => {
-    const newMessage: Message = {
-      message,
-      type: "text",
-      sender: "user",
-    };
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    setMessage2("");
-
-    const updatedChat = (selectedChat ?? []).map((msg, index, arr) => {
-      if (
-        msg.sender === "bot" &&
-        msg.options &&
-        !msg.selectedOptions &&
-        index === arr.length - 1
-      ) {
-        return { ...msg, selectedOptions: true };
-      }
-      return msg;
+  useEffect(() => {
+    messagesEndRef.current?.scrollTo({
+      top: messagesEndRef.current.scrollHeight,
+      behavior: "smooth",
     });
+  }, [selectedChat]);
 
-    const updatedMessages = [...updatedChat, newMessage];
-    const nextMessage = messages_bot.find((msg) => msg.id === idNextMessage);
-
-    if (nextMessage) {
-      setSelectedChat([...updatedMessages, nextMessage]);
-      setConversationsChats(
-        conversationsChats.map((chat: Conversation) =>
-          chat.id === conversationsChats.length
-            ? {
-                ...chat,
-                messages: [...chat.messages, newMessage, nextMessage],
-              }
-            : chat,
-        ),
-      );
-    } else {
-      setSelectedChat(updatedMessages);
-      setConversationsChats(
-        conversationsChats.map((chat: Conversation) =>
-          chat.id === conversationsChats.length
-            ? {
-                ...chat,
-                messages: [...chat.messages, newMessage],
-              }
-            : chat,
-        ),
-      );
-    }
+  const appendMessages = (newMsgs: Message[]) => {
+    setSelectedChat([...(selectedChat ?? []), ...newMsgs]);
+    setConversationsChats(
+      conversationsChats.map((chat: Conversation) =>
+        chat.id === conversationsChats.length
+          ? { ...chat, messages: [...chat.messages, ...newMsgs] }
+          : chat,
+      ),
+    );
   };
 
-  const newConversation = () => {
-    const newConversation: Conversation = {
+  const handleSendOption = (text: string, nextId: number) => {
+    const newMsg: Message = { message: text, type: "text", sender: "user" };
+    const nextMsg = messages_bot.find((m) => m.id === nextId);
+
+    const updated = (selectedChat ?? []).map((msg, idx, arr) =>
+      msg.sender === "bot" &&
+      msg.options &&
+      !msg.selectedOptions &&
+      idx === arr.length - 1
+        ? { ...msg, selectedOptions: true }
+        : msg,
+    );
+
+    setSelectedChat([...updated, newMsg, ...(nextMsg ? [nextMsg] : [])]);
+
+    setConversationsChats(
+      conversationsChats.map((chat: Conversation) =>
+        chat.id === conversationsChats.length
+          ? {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                newMsg,
+                ...(nextMsg ? [nextMsg] : []),
+              ],
+            }
+          : chat,
+      ),
+    );
+  };
+
+  const handleNewConversation = () => {
+    const welcomeMsgs = messages_bot.filter((msg) => msg.type === "welcome");
+    const newConv: Conversation = {
       id: conversationsChats.length + 1,
       title: "New Conversation",
-      messages: messages_bot.filter((msg) => msg.type === "welcome"),
+      messages: welcomeMsgs,
     };
 
-    setConversationsChats([...conversationsChats, newConversation]);
-    setSelectedChat(messages_bot.filter((msg) => msg.type === "welcome"));
+    setConversationsChats([...conversationsChats, newConv]);
+    setSelectedChat(welcomeMsgs);
+  };
+
+  const handleSendUserMessage = async () => {
+    const text = inputRef.current?.value?.trim();
+    if (!text) return;
+
+    appendMessages([
+      { message: text, type: "text", sender: "user" },
+      { message: "Escrevendo...", type: "text", sender: "bot" },
+    ]);
+
+    const response = await chatCompletion("user", text);
+
+    setSelectedChat([
+      ...(selectedChat ?? []).filter(
+        (msg: Message) => msg.message !== "Escrevendo...",
+      ),
+      { message: text, type: "text", sender: "user" },
+      { message: response, type: "text", sender: "bot" },
+    ]);
+
+    setConversationsChats(
+      conversationsChats.map((chat: Conversation) =>
+        chat.id === conversationsChats.length
+          ? {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                { message: text, type: "text", sender: "user" },
+                { message: response, type: "text", sender: "bot" },
+              ],
+            }
+          : chat,
+      ),
+    );
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   return (
@@ -94,88 +132,86 @@ export default function Chat() {
               Sofia Bot
             </p>
           </div>
+
           <div
             id="chat-box"
+            ref={messagesEndRef}
             className="dark:bg-gray-800 bg-gray-300 p-4 rounded-lg overflow-y-auto flex flex-col gap-4 h-full screen min-w-72"
           >
-            {(!selectedChat || selectedChat.length === 0) && (
+            {!selectedChat?.length ? (
               <div className="flex flex-col items-center justify-center h-full">
                 <p className="dark:text-gray-400 text-gray-950 text-lg">
                   Start a conversation with Sofia Bot!
                 </p>
                 <button
-                  onClick={newConversation}
-                  className="mt-4 bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                  onClick={handleNewConversation}
+                  className="mt-4 bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   New Conversation
                 </button>
               </div>
-            )}
-            {(selectedChat ?? []).map((message, index) =>
-              message.sender === "bot" ? (
-                <div
-                  id="messages_container-bot"
-                  className="flex flex-row gap-2"
-                  key={index}
-                >
-                  <div className="dark:bg-gray-700 bg-gray-50 dark:text-white text-black p-2 rounded-2xl flex flex-col gap-2 text-sm w-[95%]">
-                    <div className="rounded-full flex flex-row items-center gap-2">
-                      <img
-                        src={avatarBot.src}
-                        alt="Bot Avatar"
-                        className="w-9 h-9 rounded-full"
+            ) : (
+              selectedChat.map((message, index) =>
+                message.sender === "bot" ? (
+                  <div key={index} className="flex gap-2">
+                    <div className="dark:bg-gray-700 bg-gray-50 dark:text-white text-black p-2 rounded-2xl flex flex-col gap-2 text-sm w-[95%]">
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={avatarBot.src}
+                          className="w-9 h-9 rounded-full"
+                        />
+                        <p className="text-lg font-semibold">Sofia Bot</p>
+                      </div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: marked.parse(message.message),
+                        }}
                       />
-                      <p className="text-lg font-semibold dark:text-white text-black">
-                        Sofia Bot
-                      </p>
-                    </div>
-                    <p className="mb-2">
-                      {index === menssages.length - 1 &&
-                      message.sender === "bot"
-                        ? message2
-                        : message.message}
-                    </p>
-                    <div className="flex flex-col gap-2 justify-end">
-                      {message.options?.map(
-                        (option: Option, optionIndex: number) => (
+                      <div className="flex flex-col gap-2">
+                        {message.options?.map((option, i) => (
                           <button
-                            key={optionIndex}
-                            onClick={() => {
-                              handleSendMessage(
+                            key={i}
+                            onClick={() =>
+                              handleSendOption(
                                 option.text,
                                 option.idNextMessage || 0,
-                              );
-                            }}
-                            className="text-white bg-blue-600 p-1 px-3 rounded-2xl transition-colors cursor-pointer hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                              )
+                            }
                             disabled={message.selectedOptions}
+                            className="bg-blue-600 text-white p-1 px-3 rounded-2xl hover:bg-blue-700 disabled:bg-gray-500"
                           >
                             {option.text}
                           </button>
-                        ),
-                      )}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div
-                  id="messages_container-user"
-                  className="flex flex-row gap-2 justify-end text-sm w-[90%] ml-auto"
-                  key={index}
-                >
-                  <p className="bg-blue-600 text-white p-1 px-3 rounded-2xl">
-                    {message.message}
-                  </p>
-                </div>
-              ),
+                ) : (
+                  <div
+                    key={index}
+                    className="flex justify-end text-sm w-[90%] ml-auto"
+                  >
+                    <p className="bg-blue-600 text-white p-1 px-3 rounded-2xl">
+                      {message.message}
+                    </p>
+                  </div>
+                ),
+              )
             )}
           </div>
-          <div className="mt-4 flex flex-row gap-2">
+
+          <div className="mt-4 flex gap-2">
             <input
+              ref={inputRef}
               type="text"
-              placeholder="Type your message..."
-              className="w-full p-2 rounded-lg dark:bg-gray-800 bg-gray-300 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Pergunte algo para Sofia Bot..."
+              className="w-full p-2 rounded-lg dark:bg-gray-800 bg-gray-300 dark:text-white text-black focus:ring-2 focus:ring-blue-500"
+              onKeyDown={(e) => e.key === "Enter" && handleSendUserMessage()}
             />
-            <button className=" bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
+            <button
+              onClick={handleSendUserMessage}
+              className="bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700"
+            >
               <img src={send.src} alt="Send" className="w-6 h-6" />
             </button>
           </div>
