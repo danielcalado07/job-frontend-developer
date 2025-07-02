@@ -115,14 +115,14 @@ export default function Chat() {
 
     appendMessages([
       { message: text, type: "text", sender: "user" },
-      { message: "Escrevendo...", type: "text", sender: "bot" },
+      { message: "Bot está escrevendo...", type: "text", sender: "bot" },
     ]);
 
     const response = await chatCompletion("user", text);
     setIsInputDisabled(false);
 
     const updatedChatAfterAI = (selectedChat ?? []).filter(
-      (msg: Message) => msg.message !== "Escrevendo...",
+      (msg: Message) => msg.message !== "Bot está escrevendo...",
     );
 
     setSelectedChat([
