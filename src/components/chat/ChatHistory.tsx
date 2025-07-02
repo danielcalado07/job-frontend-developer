@@ -113,13 +113,7 @@ export default function ChatHistory() {
             variant="default"
             className="bg-gray-700 dark:bg-gray-800 text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
             onClick={() => {
-              const newConversation = {
-                id: conversationsChats.length + 1,
-                title: "New Conversation",
-                messages: messages_bot.filter((msg) => msg.type === "welcome"),
-              };
-              setConversationsChats([...conversationsChats, newConversation]);
-              setSelectedChat(newConversation.messages);
+              setSelectedChat(null);
             }}
           >
             <img src={squarePen.src} alt="SquarePen" className="w-6 h-6" />

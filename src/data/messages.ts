@@ -2,6 +2,16 @@ import { Message } from "@/types/message";
 
 export const messages_bot: Message[] = [
   {
+    id: 0,
+    message:
+      "Olá! Eu sou a Sofia, consultora digital da Dolado. Estou aqui para ajudar sua empresa a vender mais nos marketplaces. Vamos conversar?",
+    type: "welcome IA",
+    options: [],
+    selectedOptions: false,
+    personality: "Consultiva, acolhedora, confiante mas não pressiona",
+    sender: "bot",
+  },
+  {
     id: 1,
     message:
       "Oi! Sou a Sofia, consultora digital da Dolado. Sei que vendas online podem parecer complexas, mas vou te mostrar como sua empresa pode crescer nos marketplaces em 5 minutos. Podemos começar?",

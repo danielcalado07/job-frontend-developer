@@ -20,9 +20,9 @@ export default function Chat() {
   } = useConversationsChat();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [errosInputMessage, setErrosInputMessage] = useState<string>("");
-  const [messageSender, setMessageSender] = useState<string>("");
-  const [disabledInputButton, setDisabledInputButton] = useState<boolean>(false);
+  const [inputError, setInputError] = useState<string>("");
+  const [messageInput, setMessageInput] = useState<string>("");
+  const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
 
   useEffect(() => {
     messagesEndRef.current?.scrollTo({
@@ -43,10 +43,10 @@ export default function Chat() {
   };
 
   const handleSendOption = (text: string, nextId: number) => {
-    const newMsg: Message = { message: text, type: "text", sender: "user" };
-    const nextMsg = messages_bot.find((m) => m.id === nextId);
+    const newUserMessage: Message = { message: text, type: "text", sender: "user" };
+    const nextBotMessage = messages_bot.find((m) => m.id === nextId);
 
-    const updated = (selectedChat ?? []).map((msg, idx, arr) =>
+    const updatedChat = (selectedChat ?? []).map((msg, idx, arr) =>
       msg.sender === "bot" &&
         msg.options &&
         !msg.selectedOptions &&
@@ -55,7 +55,7 @@ export default function Chat() {
         : msg,
     );
 
-    setSelectedChat([...updated, newMsg, ...(nextMsg ? [nextMsg] : [])]);
+    setSelectedChat([...updatedChat, newUserMessage, ...(nextBotMessage ? [nextBotMessage] : [])]);
 
     setConversationsChats(
       conversationsChats.map((chat: Conversation) =>
@@ -64,8 +64,8 @@ export default function Chat() {
             ...chat,
             messages: [
               ...chat.messages,
-              newMsg,
-              ...(nextMsg ? [nextMsg] : []),
+              newUserMessage,
+              ...(nextBotMessage ? [nextBotMessage] : []),
             ],
           }
           : chat,
@@ -73,28 +73,44 @@ export default function Chat() {
     );
   };
 
-  const handleNewConversation = () => {
+  const handleNewTraditionalConversation = () => {
     const welcomeMsgs = messages_bot.filter((msg) => msg.type === "welcome");
     const newConv: Conversation = {
       id: conversationsChats.length + 1,
-      title: "New Conversation",
+      title: `Bot tradicional ${conversationsChats.length + 1}`,
       messages: welcomeMsgs,
     };
 
     setConversationsChats([...conversationsChats, newConv]);
     setSelectedChat(welcomeMsgs);
+    setIsInputDisabled(true);
+    setMessageInput("");
+  };
+
+  const handleNewAIConversation = () => {
+    const welcomeMsgs = messages_bot.filter((msg) => msg.type === "welcome IA");
+    const newConv: Conversation = {
+      id: conversationsChats.length + 1,
+      title: `Chat com IA ${conversationsChats.length + 1}`,
+      messages: welcomeMsgs,
+    };
+
+    setConversationsChats([...conversationsChats, newConv]);
+    setSelectedChat(welcomeMsgs);
+    setIsInputDisabled(false);
+    setMessageInput("");
   };
 
   const handleSendUserMessage = async () => {
-    const text = messageSender.trim();
-    setMessageSender("");
+    const text = messageInput.trim();
+    setMessageInput("");
 
-    if (!text.trim()) {
-      setErrosInputMessage("Campo obrigatório");
+    if (!text) {
+      setInputError("Campo obrigatório");
       return;
-    }else {
-      setErrosInputMessage("");
-      setDisabledInputButton(true);
+    } else {
+      setInputError("");
+      setIsInputDisabled(true);
     }
 
     appendMessages([
@@ -103,12 +119,14 @@ export default function Chat() {
     ]);
 
     const response = await chatCompletion("user", text);
-    setDisabledInputButton(false);
+    setIsInputDisabled(false);
+
+    const updatedChatAfterAI = (selectedChat ?? []).filter(
+      (msg: Message) => msg.message !== "Escrevendo...",
+    );
 
     setSelectedChat([
-      ...(selectedChat ?? []).filter(
-        (msg: Message) => msg.message !== "Escrevendo...",
-      ),
+      ...updatedChatAfterAI,
       { message: text, type: "text", sender: "user" },
       { message: response, type: "text", sender: "bot" },
     ]);
@@ -119,7 +137,7 @@ export default function Chat() {
           ? {
             ...chat,
             messages: [
-              ...chat.messages,
+              ...chat.messages.filter((msg) => msg.message !== "Escrevendo..."), // Remove "typing" from stored messages
               { message: text, type: "text", sender: "user" },
               { message: response, type: "text", sender: "bot" },
             ],
@@ -152,14 +170,20 @@ export default function Chat() {
           >
             {!selectedChat?.length ? (
               <div className="flex flex-col items-center justify-center h-full">
-                <p className="dark:text-gray-400 text-gray-950 text-lg">
-                  Start a conversation with Sofia Bot!
+                <p className="dark:text-gray-400 text-gray-950 text-center sm:text-[16px] text-[13px]">
+                  Comece um chat tradicional<br />ou envie uma mensagem para Sofia Bot.
                 </p>
                 <button
-                  onClick={handleNewConversation}
-                  className="mt-4 bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                  onClick={handleNewTraditionalConversation}
+                  className="mt-4 bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
                 >
-                  New Conversation
+                  Iniciar Chat
+                </button>
+                <button
+                  onClick={handleNewAIConversation}
+                  className="mt-2 bg-green-600 text-white p-2 px-4 rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
+                >
+                  Iniciar Chat com IA
                 </button>
               </div>
             ) : (
@@ -216,13 +240,17 @@ export default function Chat() {
             <Input
               placeholder="Pergunte algo para Sofia Bot..."
               className="w-full"
-              disabled={disabledInputButton}
-              error={errosInputMessage}
-              value={messageSender}
-              onChange={(e) => setMessageSender(e.target.value)}
+              disabled={isInputDisabled}
+              error={inputError}
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendUserMessage()}
             />
-            <Button onClick={handleSendUserMessage} className="h-10.5 px-4 rounded-md" disabled={disabledInputButton}>
+            <Button
+              onClick={handleSendUserMessage}
+              className="h-10.5 px-4 rounded-md"
+              disabled={isInputDisabled}
+            >
               <img src={send.src} alt="Send" className="w-6 h-6" />
             </Button>
           </div>
