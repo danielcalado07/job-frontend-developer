@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useId } from "react";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -9,17 +9,25 @@ export default function Input({
   label,
   error,
   className = "",
+  id,
   ...props
 }: InputProps) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
+
   return (
     <div className={`flex flex-col ${className}`}>
       {label && (
-        <label className="mb-1 text-sm font-medium text-black dark:text-white">
+        <label
+          htmlFor={inputId}
+          className="mb-1 text-sm font-medium text-black dark:text-white"
+        >
           {label}
         </label>
       )}
 
       <input
+        id={inputId}
         className={`w-full p-2 rounded-lg 
           bg-gray-300 dark:bg-gray-800 
           text-black dark:text-white 
