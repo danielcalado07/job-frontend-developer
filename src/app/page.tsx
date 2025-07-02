@@ -1,9 +1,9 @@
 "use client";
 
-import Chat from "@/components/Chat";
-import NavBar from "@/components/NavBar";
-import { ConversationsChatProvider } from "@/context/ConversationsChatContext";
-import { DrawerProvider } from "@/context/DrawerContext";
+import Chat from "@/components/chat/Chat";
+import NavBar from "@/components/layout/Navbar";
+import { ConversationsChatProvider } from "@/context/conversationsChatContext";
+import { DrawerProvider } from "@/context/drawerContext";
 
 export default function Home() {
   return (

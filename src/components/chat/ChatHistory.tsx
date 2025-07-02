@@ -7,9 +7,9 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useDrawer } from "@/context/DrawerContext";
-import { useConversationsChat } from "@/context/ConversationsChatContext";
-import squarePen from "@/assets/square-pen.svg";
+import { useDrawer } from "@/context/drawerContext";
+import { useConversationsChat } from "@/context/conversationsChatContext";
+import squarePen from "@/assets/icons/square-pen.svg";
 import { messages_bot } from "@/data/messages";
 
 export default function ChatHistory() {

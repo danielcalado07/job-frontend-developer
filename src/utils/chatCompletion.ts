@@ -4,7 +4,9 @@ export default async function chatCompletion(
   role: string,
   content: string,
 ): Promise<string> {
-  const client = new InferenceClient(process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY || "");
+  const client = new InferenceClient(
+    process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY || "",
+  );
 
   const chatCompletion = await client.chatCompletion({
     provider: "novita",

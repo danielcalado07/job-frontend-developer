@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { marked } from "marked";
-import avatarBot from "@/assets/avatarBot.png";
-import send from "@/assets/send.svg";
+import avatarBot from "@/assets/images/avatar-bot.png";
+import send from "@/assets/icons/send.svg";
 import { messages_bot } from "@/data/messages";
-import { useConversationsChat } from "@/context/ConversationsChatContext";
+import { useConversationsChat } from "@/context/conversationsChatContext";
 import ChatHistory from "./ChatHistory";
 import chatCompletion from "@/utils/chatCompletion";
 import { Conversation, Message } from "@/types/message";

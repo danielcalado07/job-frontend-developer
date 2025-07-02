@@ -1,7 +1,7 @@
 "use client";
 
 import { Conversation, Message } from "@/types/message";
-import { storage } from "@/utils/useLocalStorage";
+import { storage } from "@/hooks/useLocalStorage";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface ConversationsChatContextType {

@@ -1,11 +1,11 @@
 "use client";
-import { useDrawer } from "@/context/DrawerContext";
+import { useDrawer } from "@/context/drawerContext";
 import Link from "next/link";
 import * as Switch from "@radix-ui/react-switch";
-import sun from "@/assets/sun.svg";
-import moon from "@/assets/moon.svg";
+import sun from "@/assets/icons/sun.svg";
+import moon from "@/assets/icons/moon.svg";
 import { useEffect, useState } from "react";
-import { storage } from "@/utils/useLocalStorage";
+import { storage } from "@/hooks/useLocalStorage";
 
 export default function NavBar() {
   const { toggleDrawer } = useDrawer();
