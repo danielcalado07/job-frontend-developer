@@ -11,10 +11,11 @@ import { useDrawer } from "@/context/drawerContext";
 import { useConversationsChat } from "@/context/conversationsChatContext";
 import squarePen from "@/assets/icons/square-pen.svg";
 import { messages_bot } from "@/data/messages";
+import Button from "../ui/Button";
 
 export default function ChatHistory() {
   const { open, toggleDrawer } = useDrawer();
-  const { conversationsChats, setConversationsChats, setSelectedChat } =
+  const { conversationsChats, setConversationsChats, setSelectedChat, selectedChat } =
     useConversationsChat();
 
   return (
@@ -36,20 +37,22 @@ export default function ChatHistory() {
                 >
                   <TransitionChild>
                     <div className="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 duration-500 ease-in-out data-closed:opacity-0 sm:-ml-10 sm:pr-4 ">
-                      <button
+                      <Button
                         type="button"
+                        variant="default"
                         onClick={() => toggleDrawer()}
                         className="relative rounded-md text-gray-300 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-hidden"
                       >
                         <span className="absolute -inset-2.5" />
                         <span className="sr-only">Close panel</span>
                         <XMarkIcon aria-hidden="true" className="size-6" />
-                      </button>
+                      </Button>
                     </div>
                   </TransitionChild>
                   <div className="flex h-full flex-col overflow-y-auto dark:bg-gray-800 bg-gray-200 shadow-xl">
                     <div className="dark:bg-gray-800 bg-gray-200 overflow-y-auto flex flex-col gap-2 h-full screen">
-                      <button
+                      <Button
+                        variant="default"
                         className="bg-gray-700 dark:bg-gray-800 text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer dark:hover:bg-gray-700 transition-colors "
                         onClick={() => {
                           const newConversation = {
@@ -73,23 +76,26 @@ export default function ChatHistory() {
                           className="w-6 h-6"
                         />
                         New Chat
-                      </button>
+                      </Button>
 
                       {/* List of conversations */}
                       <h2 className="dark:text-white text-black text-lg font-semibold px-4 py-2">
                         Chats
                       </h2>
                       {conversationsChats.map((chat) => (
-                        <button
+                        <Button
                           key={chat.id}
-                          className="menu-item px-4 py-2 dark:hover:bg-gray-700 hover:bg-gray-400 transition-colors cursor-pointer dark:text-white text-black text-md font-semibold"
+                          variant="default"
+                          className={`menu-item px-4 py-2 transition-colors cursor-pointer text-md font-semibold
+                          ${chat.messages === selectedChat ? 'bg-gray-400 dark:bg-gray-700' : 'hover:bg-gray-400 dark:hover:bg-gray-700'}
+                         text-black dark:text-white`}
                           onClick={() => {
                             setSelectedChat(chat.messages);
                             toggleDrawer();
                           }}
                         >
                           {chat.title}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </div>
@@ -103,7 +109,8 @@ export default function ChatHistory() {
       {/* Sidebar for larger screens */}
       <div className="bg-gray-900 shadow-md rounded-lg w-full max-w-52 flex-col hidden md:block">
         <div className="dark:bg-gray-800 bg-gray-300 rounded-lg overflow-y-auto flex flex-col gap-2 h-full screen">
-          <button
+          <Button
+            variant="default"
             className="bg-gray-700 dark:bg-gray-800 text-white text-md font-semibold p-4 flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
             onClick={() => {
               const newConversation = {
@@ -117,22 +124,24 @@ export default function ChatHistory() {
           >
             <img src={squarePen.src} alt="SquarePen" className="w-6 h-6" />
             New Chat
-          </button>
+          </Button>
 
           {/* List of conversations */}
           <h2 className="dark:text-white text-black text-lg font-semibold px-4 py-2">
             Chats
           </h2>
           {conversationsChats.map((chat) => (
-            <button
+            <Button
+              variant="default"
               key={chat.id}
-              className="menu-item px-4 py-2 dark:hover:bg-gray-700 hover:bg-gray-400 transition-colors cursor-pointer  dark:text-white text-black text-md font-semibold"
-              onClick={() => {
+              className={`menu-item px-4 py-2 transition-colors cursor-pointer text-md font-semibold
+              ${chat.messages === selectedChat ? 'bg-gray-400 dark:bg-gray-700' : 'hover:bg-gray-400 dark:hover:bg-gray-700'}
+              text-black dark:text-white`} onClick={() => {
                 setSelectedChat(chat.messages);
               }}
             >
               {chat.title}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

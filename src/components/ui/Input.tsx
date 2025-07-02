@@ -35,7 +35,6 @@ export default function Input({
           border ${error ? "border-red-500" : "border-gray-300"}`}
         {...props}
       />
-
       {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
     </div>
   );

@@ -30,12 +30,8 @@ export function ConversationsChatProvider({
 
   useEffect(() => {
     const storedChats = storage.getItem("conversationsChats");
-    const storedSelectedChat = storage.getItem("selectedChat");
 
     if (storedChats) setConversationsChatsState(JSON.parse(storedChats));
-    if (storedSelectedChat)
-      setSelectedChatState(JSON.parse(storedSelectedChat));
-
     setIsClient(true);
   }, []);
 

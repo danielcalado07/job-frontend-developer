@@ -20,8 +20,9 @@ export default function Chat() {
   } = useConversationsChat();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [errosInputMessage, setErrosInputMessage] = useState<string>("");
   const [messageSender, setMessageSender] = useState<string>("");
+  const [disabledInputButton, setDisabledInputButton] = useState<boolean>(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollTo({
@@ -85,19 +86,30 @@ export default function Chat() {
   };
 
   const handleSendUserMessage = async () => {
+    const text = messageSender.trim();
+    setMessageSender("");
+
+    if (!text.trim()) {
+      setErrosInputMessage("Campo obrigatório");
+      return;
+    }else {
+      setErrosInputMessage("");
+      setDisabledInputButton(true);
+    }
 
     appendMessages([
-      { message: messageSender, type: "text", sender: "user" },
+      { message: text, type: "text", sender: "user" },
       { message: "Escrevendo...", type: "text", sender: "bot" },
     ]);
 
-    const response = await chatCompletion("user", messageSender);
+    const response = await chatCompletion("user", text);
+    setDisabledInputButton(false);
 
     setSelectedChat([
       ...(selectedChat ?? []).filter(
         (msg: Message) => msg.message !== "Escrevendo...",
       ),
-      { message: messageSender, type: "text", sender: "user" },
+      { message: text, type: "text", sender: "user" },
       { message: response, type: "text", sender: "bot" },
     ]);
 
@@ -108,14 +120,13 @@ export default function Chat() {
             ...chat,
             messages: [
               ...chat.messages,
-              { message: messageSender, type: "text", sender: "user" },
+              { message: text, type: "text", sender: "user" },
               { message: response, type: "text", sender: "bot" },
             ],
           }
           : chat,
       ),
     );
-    setMessageSender("");
   };
 
   return (
@@ -170,7 +181,7 @@ export default function Chat() {
                       />
                       <div className="flex flex-col gap-2">
                         {message.options?.map((option, i) => (
-                          <button
+                          <Button
                             key={i}
                             onClick={() =>
                               handleSendOption(
@@ -182,7 +193,7 @@ export default function Chat() {
                             className="bg-blue-600 text-white p-1 px-3 rounded-2xl hover:bg-blue-700 disabled:bg-gray-500"
                           >
                             {option.text}
-                          </button>
+                          </Button>
                         ))}
                       </div>
                     </div>
@@ -201,15 +212,17 @@ export default function Chat() {
             )}
           </div>
 
-          <div className="mt-4 flex gap-2">
+          <div className="mt-4 flex gap-2 flex-row">
             <Input
               placeholder="Pergunte algo para Sofia Bot..."
               className="w-full"
+              disabled={disabledInputButton}
+              error={errosInputMessage}
               value={messageSender}
               onChange={(e) => setMessageSender(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendUserMessage()}
             />
-            <Button onClick={handleSendUserMessage} className="flex items-center">
+            <Button onClick={handleSendUserMessage} className="h-10.5 px-4 rounded-md" disabled={disabledInputButton}>
               <img src={send.src} alt="Send" className="w-6 h-6" />
             </Button>
           </div>
