@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { marked } from "marked";
 import avatarBot from "@/assets/images/avatar-bot.png";
 import send from "@/assets/icons/send.svg";
@@ -8,6 +8,8 @@ import { useConversationsChat } from "@/context/conversationsChatContext";
 import ChatHistory from "./ChatHistory";
 import chatCompletion from "@/utils/chatCompletion";
 import { Conversation, Message } from "@/types/message";
+import Button from "../ui/Button";
+import Input from "../ui/Input";
 
 export default function Chat() {
   const {
@@ -19,6 +21,7 @@ export default function Chat() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [messageSender, setMessageSender] = useState<string>("");
 
   useEffect(() => {
     messagesEndRef.current?.scrollTo({
@@ -44,9 +47,9 @@ export default function Chat() {
 
     const updated = (selectedChat ?? []).map((msg, idx, arr) =>
       msg.sender === "bot" &&
-      msg.options &&
-      !msg.selectedOptions &&
-      idx === arr.length - 1
+        msg.options &&
+        !msg.selectedOptions &&
+        idx === arr.length - 1
         ? { ...msg, selectedOptions: true }
         : msg,
     );
@@ -57,13 +60,13 @@ export default function Chat() {
       conversationsChats.map((chat: Conversation) =>
         chat.id === conversationsChats.length
           ? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                newMsg,
-                ...(nextMsg ? [nextMsg] : []),
-              ],
-            }
+            ...chat,
+            messages: [
+              ...chat.messages,
+              newMsg,
+              ...(nextMsg ? [nextMsg] : []),
+            ],
+          }
           : chat,
       ),
     );
@@ -82,21 +85,19 @@ export default function Chat() {
   };
 
   const handleSendUserMessage = async () => {
-    const text = inputRef.current?.value?.trim();
-    if (!text) return;
 
     appendMessages([
-      { message: text, type: "text", sender: "user" },
+      { message: messageSender, type: "text", sender: "user" },
       { message: "Escrevendo...", type: "text", sender: "bot" },
     ]);
 
-    const response = await chatCompletion("user", text);
+    const response = await chatCompletion("user", messageSender);
 
     setSelectedChat([
       ...(selectedChat ?? []).filter(
         (msg: Message) => msg.message !== "Escrevendo...",
       ),
-      { message: text, type: "text", sender: "user" },
+      { message: messageSender, type: "text", sender: "user" },
       { message: response, type: "text", sender: "bot" },
     ]);
 
@@ -104,17 +105,17 @@ export default function Chat() {
       conversationsChats.map((chat: Conversation) =>
         chat.id === conversationsChats.length
           ? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                { message: text, type: "text", sender: "user" },
-                { message: response, type: "text", sender: "bot" },
-              ],
-            }
+            ...chat,
+            messages: [
+              ...chat.messages,
+              { message: messageSender, type: "text", sender: "user" },
+              { message: response, type: "text", sender: "bot" },
+            ],
+          }
           : chat,
       ),
     );
-    if (inputRef.current) inputRef.current.value = "";
+    setMessageSender("");
   };
 
   return (
@@ -201,19 +202,16 @@ export default function Chat() {
           </div>
 
           <div className="mt-4 flex gap-2">
-            <input
-              ref={inputRef}
-              type="text"
+            <Input
               placeholder="Pergunte algo para Sofia Bot..."
-              className="w-full p-2 rounded-lg dark:bg-gray-800 bg-gray-300 dark:text-white text-black focus:ring-2 focus:ring-blue-500"
+              className="w-full"
+              value={messageSender}
+              onChange={(e) => setMessageSender(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendUserMessage()}
             />
-            <button
-              onClick={handleSendUserMessage}
-              className="bg-blue-600 text-white p-2 px-4 rounded-lg hover:bg-blue-700"
-            >
+            <Button onClick={handleSendUserMessage} className="flex items-center">
               <img src={send.src} alt="Send" className="w-6 h-6" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
