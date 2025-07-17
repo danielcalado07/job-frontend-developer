@@ -56,6 +56,7 @@ A estrutura do projeto foi pensada para facilitar a escalabilidade e manutençã
 * utils/ # Funções auxiliares (ex: chamada à IA)
 
 ## Como rodar o projeto
+Via netlify: https://jobfrontenddeveloper.netlify.app/
 
 Clone o repositório:
 ```bash
