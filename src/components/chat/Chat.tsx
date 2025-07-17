@@ -10,6 +10,8 @@ import chatCompletion from "@/utils/chatCompletion";
 import { Conversation, Message } from "@/types/message";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import ModalLogin from "../modalLogin";
+import { useModaisContext } from "@/context/modalContext";
 
 export default function Chat() {
   const {
@@ -22,6 +24,7 @@ export default function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [inputError, setInputError] = useState<string>("");
   const [messageInput, setMessageInput] = useState<string>("");
+  const { modalLogin } = useModaisContext();
   const [isInputDisabled, setIsInputDisabled] = useState<boolean>(true);
 
   useEffect(() => {
@@ -37,39 +40,47 @@ export default function Chat() {
       conversationsChats.map((chat: Conversation) =>
         chat.id === conversationsChats.length
           ? { ...chat, messages: [...chat.messages, ...newMsgs] }
-          : chat,
-      ),
+          : chat
+      )
     );
   };
 
   const handleSendOption = (text: string, nextId: number) => {
-    const newUserMessage: Message = { message: text, type: "text", sender: "user" };
+    const newUserMessage: Message = {
+      message: text,
+      type: "text",
+      sender: "user",
+    };
     const nextBotMessage = messages_bot.find((m) => m.id === nextId);
 
     const updatedChat = (selectedChat ?? []).map((msg, idx, arr) =>
       msg.sender === "bot" &&
-        msg.options &&
-        !msg.selectedOptions &&
-        idx === arr.length - 1
+      msg.options &&
+      !msg.selectedOptions &&
+      idx === arr.length - 1
         ? { ...msg, selectedOptions: true }
-        : msg,
+        : msg
     );
 
-    setSelectedChat([...updatedChat, newUserMessage, ...(nextBotMessage ? [nextBotMessage] : [])]);
+    setSelectedChat([
+      ...updatedChat,
+      newUserMessage,
+      ...(nextBotMessage ? [nextBotMessage] : []),
+    ]);
 
     setConversationsChats(
       conversationsChats.map((chat: Conversation) =>
         chat.id === conversationsChats.length
           ? {
-            ...chat,
-            messages: [
-              ...chat.messages,
-              newUserMessage,
-              ...(nextBotMessage ? [nextBotMessage] : []),
-            ],
-          }
-          : chat,
-      ),
+              ...chat,
+              messages: [
+                ...chat.messages,
+                newUserMessage,
+                ...(nextBotMessage ? [nextBotMessage] : []),
+              ],
+            }
+          : chat
+      )
     );
   };
 
@@ -122,7 +133,7 @@ export default function Chat() {
     setIsInputDisabled(false);
 
     const updatedChatAfterAI = (selectedChat ?? []).filter(
-      (msg: Message) => msg.message !== "Bot está escrevendo...",
+      (msg: Message) => msg.message !== "Bot está escrevendo..."
     );
 
     setSelectedChat([
@@ -135,15 +146,17 @@ export default function Chat() {
       conversationsChats.map((chat: Conversation) =>
         chat.id === conversationsChats.length
           ? {
-            ...chat,
-            messages: [
-              ...chat.messages.filter((msg) => msg.message !== "Escrevendo..."), // Remove "typing" from stored messages
-              { message: text, type: "text", sender: "user" },
-              { message: response, type: "text", sender: "bot" },
-            ],
-          }
-          : chat,
-      ),
+              ...chat,
+              messages: [
+                ...chat.messages.filter(
+                  (msg) => msg.message !== "Escrevendo..."
+                ), // Remove "typing" from stored messages
+                { message: text, type: "text", sender: "user" },
+                { message: response, type: "text", sender: "bot" },
+              ],
+            }
+          : chat
+      )
     );
   };
 
@@ -171,7 +184,9 @@ export default function Chat() {
             {!selectedChat?.length ? (
               <div className="flex flex-col items-center justify-center h-full">
                 <p className="dark:text-gray-400 text-gray-950 text-center sm:text-[16px] text-[13px]">
-                  Comece um chat tradicional<br />ou envie uma mensagem para Sofia Bot.
+                  Comece um chat tradicional
+                  <br />
+                  ou envie uma mensagem para Sofia Bot.
                 </p>
                 <button
                   onClick={handleNewTraditionalConversation}
@@ -210,7 +225,7 @@ export default function Chat() {
                             onClick={() =>
                               handleSendOption(
                                 option.text,
-                                option.idNextMessage || 0,
+                                option.idNextMessage || 0
                               )
                             }
                             disabled={message.selectedOptions}
@@ -231,7 +246,7 @@ export default function Chat() {
                       {message.message}
                     </p>
                   </div>
-                ),
+                )
               )
             )}
           </div>
@@ -256,6 +271,7 @@ export default function Chat() {
           </div>
         </div>
       </div>
+      {modalLogin && <ModalLogin />}
     </main>
   );
 }
