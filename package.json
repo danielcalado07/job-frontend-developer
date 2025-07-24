@@ -19,7 +19,9 @@
     "next": "15.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-scrollbar": "^4.0.2"
+    "tailwind-scrollbar": "^4.0.2",
+      "bcryptjs": "^2.4.3"
+
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
