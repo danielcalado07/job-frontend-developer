@@ -36,17 +36,13 @@ export default function ModalLogin() {
     const usuarios = getUsuarios();
     const senhaSalva = usuarios[email];
 
-    if (!senhaSalva) {
-      return setMensagem("Usuário não encontrado");
-    }
-
     const senhaCorreta = await bcrypt.compare(senha, senhaSalva);
 
     if (senhaCorreta) {
       setMensagem("Login bem-sucedido!");
       setTimeout(handleClose, 1500);
     } else {
-      setMensagem("Senha incorreta");
+      setMensagem("Senha ou úsuario incorreta");
     }
   };
 
