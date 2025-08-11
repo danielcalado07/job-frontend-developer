@@ -4,7 +4,7 @@ export const messages_bot: Message[] = [
   {
     id: 0,
     message:
-      "Olá! Eu sou a Sofia, consultora digital da Dolado. Estou aqui para ajudar sua empresa a vender mais nos marketplaces. Vamos conversar?",
+      "Olá! Sou uma IA especializada em análise preliminar de sintomas para sugerir diagnósticos possíveis.",
     type: "welcome IA",
     options: [],
     selectedOptions: false,

@@ -17,7 +17,7 @@ export const ModaisProvider: React.FC<{ children: React.ReactNode }> = ({
       modalLogin,
       setModalLogin,
     }),
-    [modalLogin, setModalLogin]
+    [modalLogin, setModalLogin],
   );
 
   return (

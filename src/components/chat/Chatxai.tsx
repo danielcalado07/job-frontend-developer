@@ -4,19 +4,23 @@ import { marked } from "marked";
 import avatarBot from "@/assets/images/avatar-bot.png";
 import send from "@/assets/icons/send.svg";
 import { messages_bot } from "@/data/messages";
-import { useConversationsChat } from "@/context/conversationsChatContext";
-import chatCompletion from "@/utils/chatCompletion";
+import chatCompletionXai from "@/utils/chatCompletionxai";
 import { Conversation, Message } from "@/types/message";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 
-export default function Chat() {
-  const {
-    conversationsChats,
-    setConversationsChats,
-    selectedChat,
-    setSelectedChat,
-  } = useConversationsChat();
+export default function Chatxai() {
+  const [conversationsChats, setConversationsChatsState] = useState<
+    Conversation[]
+  >([]);
+  const [selectedChat, setSelectedChatState] = useState<Message[] | null>(null);
+  const setConversationsChats = (chats: Conversation[]) => {
+    setConversationsChatsState(chats);
+  };
+
+  const setSelectedChat = (chat: Message[] | null) => {
+    setSelectedChatState(chat);
+  };
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [inputError, setInputError] = useState<string>("");
@@ -125,7 +129,7 @@ export default function Chat() {
       { message: "Bot está escrevendo...", type: "text", sender: "bot" },
     ]);
 
-    const response = await chatCompletion("user", text);
+    const response = await chatCompletionXai("user", text);
     setIsInputDisabled(false);
 
     const updatedChatAfterAI = (selectedChat ?? []).filter(
@@ -167,7 +171,7 @@ export default function Chat() {
               className="w-12 h-12 mr-4 rounded-full"
             />
             <p className="text-lg font-semibold dark:text-white text-black">
-              Chat Bot
+              Chat Bot (XAI)
             </p>
           </div>
 

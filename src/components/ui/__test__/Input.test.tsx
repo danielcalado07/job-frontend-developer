@@ -4,7 +4,7 @@ import Input from "../Input";
 describe("Input", () => {
   it("renderiza com label e placeholder", () => {
     render(<Input label="Nome" placeholder="Digite seu nome" />);
-    
+
     expect(screen.getByLabelText("Nome")).toBeInTheDocument();
 
     expect(screen.getByPlaceholderText("Digite seu nome")).toBeInTheDocument();
@@ -12,16 +12,16 @@ describe("Input", () => {
 
   it("aceita texto digitado", () => {
     render(<Input placeholder="Seu nome" />);
-    
+
     const input = screen.getByPlaceholderText("Seu nome");
     fireEvent.change(input, { target: { value: "Daniel" } });
-    
+
     expect(input).toHaveValue("Daniel");
   });
 
   it("exibe mensagem de erro quando informada", () => {
     render(<Input label="Email" error="Campo obrigatório" />);
-    
+
     expect(screen.getByText("Campo obrigatório")).toBeInTheDocument();
   });
 

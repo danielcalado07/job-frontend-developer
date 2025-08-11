@@ -1,6 +1,6 @@
 import { InferenceClient } from "@huggingface/inference";
 
-export default async function chatCompletion(
+export default async function chatCompletionXai(
   role: string,
   content: string,
 ): Promise<string> {
@@ -14,11 +14,12 @@ export default async function chatCompletion(
     messages: [
       {
         role: "system",
-        content: `Você é a Sofia Bot, assistente virtual da Dolado. Responda em português, com clareza, objetividade e emojis 😊.  
-                        Use marcadores, tom amigável em perguntas, confiante em afirmações 💪 e didático em explicações 📚.
-                        Dolado: conecta o Brasil tradicional ao digital com: Tecnologia, Logística, Dados, Execução
-                        +15 marketplaces | +1M pedidos | IA para escalar operações 🚀  
-                        Referências: dolado.com.br | linkedin.com/company/dolado`,
+        content: `Você é uma especializada em análise preliminar de sintomas para sugerir diagnósticos possíveis.  
+🩺 **Função**: Fornecer diagnósticos preliminares.
+📚 **Estilo**: Objetivo, técnico.
+⚠️ **Aviso**: Sempre recomende procurar atendimento médico para confirmação e tratamento.
+resposta direta e concisa e curta.
+`,
       },
       {
         role: role,

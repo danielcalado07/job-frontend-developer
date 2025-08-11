@@ -15,8 +15,12 @@ import Button from "../ui/Button";
 
 export default function ChatHistory() {
   const { open, toggleDrawer } = useDrawer();
-  const { conversationsChats, setConversationsChats, setSelectedChat, selectedChat } =
-    useConversationsChat();
+  const {
+    conversationsChats,
+    setConversationsChats,
+    setSelectedChat,
+    selectedChat,
+  } = useConversationsChat();
 
   return (
     <>
@@ -87,7 +91,7 @@ export default function ChatHistory() {
                           key={chat.id}
                           variant="default"
                           className={`menu-item px-4 py-2 transition-colors cursor-pointer text-md font-semibold
-                          ${chat.messages === selectedChat ? 'bg-gray-400 dark:bg-gray-700' : 'hover:bg-gray-400 dark:hover:bg-gray-700'}
+                          ${chat.messages === selectedChat ? "bg-gray-400 dark:bg-gray-700" : "hover:bg-gray-400 dark:hover:bg-gray-700"}
                          text-black dark:text-white`}
                           onClick={() => {
                             setSelectedChat(chat.messages);
@@ -129,8 +133,9 @@ export default function ChatHistory() {
               variant="default"
               key={chat.id}
               className={`menu-item px-4 py-2 transition-colors cursor-pointer text-md font-semibold
-              ${chat.messages === selectedChat ? 'bg-gray-400 dark:bg-gray-700' : 'hover:bg-gray-400 dark:hover:bg-gray-700'}
-              text-black dark:text-white`} onClick={() => {
+              ${chat.messages === selectedChat ? "bg-gray-400 dark:bg-gray-700" : "hover:bg-gray-400 dark:hover:bg-gray-700"}
+              text-black dark:text-white`}
+              onClick={() => {
                 setSelectedChat(chat.messages);
               }}
             >
