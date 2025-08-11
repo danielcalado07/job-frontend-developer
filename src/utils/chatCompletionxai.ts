@@ -2,10 +2,10 @@ import { InferenceClient } from "@huggingface/inference";
 
 export default async function chatCompletionXai(
   role: string,
-  content: string,
+  content: string
 ): Promise<string> {
   const client = new InferenceClient(
-    process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY || "",
+    process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY || ""
   );
 
   const chatCompletion = await client.chatCompletion({
@@ -23,11 +23,7 @@ export default async function chatCompletionXai(
 📚 Explicação: [descrição clara do problema]
 🔍 Sintomas analisados: [lista]
 ⚠️ Recomendação: [orientação]
-Exemplo:
-🩺 Diagnóstico Preliminar: Meningite viral
-📚 Explicação: Os sintomas indicam uma possível inflamação das meninges, com febre, cefaleia intensa e rigidez cervical.
-🔍 Sintomas analisados: febre alta, dor de cabeça, rigidez na nuca
-⚠️ Recomendação: Procure atendimento médico imediato para confirmação e tratamento.`,
+usar modelo LIME E SHAP para explicar as decisões. SEMPRE EXPLICAR COMO CHEGOU E QUE MEIO USOU PARA CHEGAR ÀS CONCLUSÕES E CITE SUAS FONTES, DEVIDA AS COISAS EM TOPICOS.`,
       },
       {
         role: role,
